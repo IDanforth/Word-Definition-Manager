@@ -5,6 +5,7 @@
 #include<cctype>
 #include<fstream>
 
+//blueprint for new words. Includes definition storage and two functions: erase and list
 class word{
     public:
         std::vector<std::string> definitions;
@@ -28,6 +29,7 @@ class word{
         }
 };
 
+//used to ignore input cases
 std::string ignore_case(std::string input){
     std::string output = "";
     for(char chr : input){
@@ -36,7 +38,7 @@ std::string ignore_case(std::string input){
     return output;
 }
 
-//reads number of words, number of definitions for each word, the word itself, and each definition
+//reads the number of words, the number of definitions for each word, the word itself, and each definition
 std::map<std::string, word*> read_in(){
     std::ifstream inputfile;
     inputfile.open("WordSave.txt");
@@ -58,7 +60,7 @@ std::map<std::string, word*> read_in(){
     return map;
 }
 
-//outputs number of words, number of definitions for each word, the word itself, and each definition
+//outputs the number of words, the number of definitions for each word, the word itself, and each definition
 void read_out(std::map<std::string, word*> map){
     std::ofstream outputfile;
     outputfile.open("WordSave.txt");
@@ -84,6 +86,7 @@ bool contains_letter(std::string string){
 
 int main(){
     std::string input;
+    //reads in saved data from "WordSave.txt"
     std::map<std::string, word*> words = read_in();
     std::cout << "Words saved: " << words.size() << '\n';
     //main loop for each word entry
@@ -102,7 +105,7 @@ int main(){
             }
             continue;
         }
-        //if word does not have definitions, meaning word does not exist, it will create a new word
+        //if the word does not have definitions, meaning the word does not exist, it will create a new word
         if(words[input] == nullptr){
             word* temp = new word;
             std::string def;
@@ -114,7 +117,7 @@ int main(){
                 }
                 temp->definitions.push_back(def);
             }
-            //resets the word if no defs found
+            //resets the word if no definitions are found
             if(temp->definitions.size() != 0){
                 words[input] = temp;
             }else{
@@ -129,7 +132,7 @@ int main(){
                 if(ignore_case(req) == "EXIT"){
                     break;
                 }
-                //returns a vector of requests. Should be the request and a number
+                //returns a vector of requests. It should be the request and a number
                 std::vector<std::string> reqs = {};
                 std::string strtopush = "";
                 for(char chr : req){
@@ -184,7 +187,7 @@ int main(){
                     }
                 }
             }
-            //resets the word if no defs found
+            //resets the word if no definitions are found
             if(words[input]->definitions.size() == 0){
                 words.erase(input);
             }
