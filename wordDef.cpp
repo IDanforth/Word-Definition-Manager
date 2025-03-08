@@ -179,7 +179,7 @@ int main(){
                         }
                         for(int i = 0; i < std::stoi(reqs[1]); i++){
                             std::string added_input;
-                            std::cin >> added_input;
+                            std::getline(std::cin, added_input);
                             words[input]->definitions.push_back(added_input);
                         }
                     }else{
